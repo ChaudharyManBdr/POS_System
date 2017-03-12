@@ -10,8 +10,8 @@ $(function(){
 			method: 'GET',
 			contentType: 'application/json',
 			success: function(response){
-				var data = response;
-				displayItems(data);
+				
+				displayItems(response);
 			}
 		})
 	})
