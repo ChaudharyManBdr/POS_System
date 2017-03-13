@@ -24,24 +24,23 @@ app.get('/products', function(req, res){
 	res.send({item: products});
 })
 
-app.post('/products', function(req, res){
-	var prodcutName = req.body.name;
+app.post('/products/:name', function(req, res){
+	var prodcutName = req.params.name; 
 	currentId++;
 	products.push({
 		id: currentId,
 		name: prodcutName
-	})
+	});
+	 console.log(products.length);
 })
 
 app.put('/products/:id', function(res, res){
 	var id = req.params.id;
 	var newName = req.body.newName;
-
-	var found = false;
-
+	
 	products.forEach(function(item, index){
-		if(!found && item.id === Number(id)){
-			item.name = newName;
+		if(item['id'] == Number(id)){
+			item['name'] = newName;
 		}
 	})
 	res.send('Successfully updated');
@@ -49,11 +48,10 @@ app.put('/products/:id', function(res, res){
 
 app.delete('/products/:id', function(req, res){
 	var id = req.params.id;
-	var found = false;
-
 	products.forEach(function(item, index){
-		if(!found && item.id === Number(id)){
-			item.splice(index, 1);
+		
+		if(item['id'] == Number(id)){
+			products.splice(index, 1);
 		}
 	})
 	res.send("Successfully deleted!");

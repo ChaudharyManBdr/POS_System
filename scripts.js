@@ -38,20 +38,20 @@ $(function(){
 	}
 
 	//ajax add product
-	$("#create-form").on('submit', function(event){
-		event.preventDefault();
+	$("#submit").on('click', function(){
+		
 		var inputValue = $("#create-input").val();
 		
 		$.ajax({
-			url: '/products',
+			url: '/products/'+inputValue,
 			method: 'POST',
 			contentType: 'applicatio/json',
-			data: JSON.stringify({name: inputValue}),
+			//data: JSON.stringify({name: inputValue}), 
 			success: function(response){
+				console.log('created......test')
 				console.log(response);
-				$("#create-input").val("");
-
-				$("#get-button").click();
+				$("#create-input").val(" ");
+				$("#get-button").click(); //console.log('created......test')
 			}
 		})
 	})
@@ -62,25 +62,25 @@ $(function(){
 	$('table').on('click', '.update-button', function(){
 		var rowEl = $(this).closest("tr");
 		var id = rowEl.find('.id').text();
-		var newName = rowEl.find('.name').val();
+		var updateVal = rowEl.find('.name').val();
 
 		$.ajax({
-			url: '/products/' + id,
+			url: '/products/'+id,
 			method: 'PUT',
 			contentType: 'application/json',
-			data: JSON.stringify({newName: newName}),
+			data: JSON.stringify({newName: updateVal}),
 			success: function(response){
 				console.log(response)
 				$('#get-button').click();
 			}
 		})
-	}
+	});
 
 	// ajax delete
 
 	$("table").on('click', '.delete-button', function(){
 		var rowEl = $(this).closest("tr");
-		var id = rowEl.find('.id').text();
+		var id = rowEl.find('.id').text(); 
  
 		$.ajax({
 			url: '/products/'+id,
